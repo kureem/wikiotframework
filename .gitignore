@@ -12,3 +12,8 @@ RemoteSystemsTempFiles/
 */.classpath
 */.settings/
 .recommenders/
+.generated/
+js/.jsweet/
+js/webapp/
+js/js/
+js/*-SNAPSHOT

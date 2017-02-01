@@ -16,7 +16,7 @@
 package org.wikiot;
 
 public class DefinitionBuilder {
-
+   
 	private DeviceDefinition def;
 
 	private DefinitionBuilder(DeviceDefinition definition) {
