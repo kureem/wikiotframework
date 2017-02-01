@@ -2,7 +2,6 @@ package org.wikiot.server.sample;
 
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
 import org.wikiot.server.Device;
 import org.wikiot.server.EventListener;
 import org.wikiot.server.websocket.GenericIOTApplet;

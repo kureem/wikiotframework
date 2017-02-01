@@ -9,9 +9,11 @@ package evan.x.merz;
 
 //if you catch any bugs in this, or improve upon it significantly, send me the changes
 //at evan at thisisnotalabel dot com, so we can share your changes with the world
-
-import java.io.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class wavIO {
   /*
@@ -108,7 +110,8 @@ public class wavIO {
   }
 
   // read a wav file into this class
-  public boolean read() {
+  @SuppressWarnings("unused")
+public boolean read() {
     DataInputStream inFile = null;
     myData = null;
     byte[] tmpLong = new byte[4];
@@ -189,8 +192,9 @@ public class wavIO {
 
   // write out the wav file
   public boolean save() {
+	  DataOutputStream outFile=null;
     try {
-      DataOutputStream outFile = new DataOutputStream(new FileOutputStream(
+      outFile = new DataOutputStream(new FileOutputStream(
           myPath));
 
       // write the wav file per the wav file format
@@ -269,6 +273,13 @@ public class wavIO {
     } catch (Exception e) {
       System.out.println(e.getMessage());
       return false;
+    }finally{
+    	if(outFile != null)
+			try {
+				outFile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
     }
 
     return true;
