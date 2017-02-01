@@ -9,6 +9,5 @@ buildNumber.properties
 .mvn/timing.properties
 .metadata/
 RemoteSystemsTempFiles/
-*/.project
 */.classpath
 */.settings/
