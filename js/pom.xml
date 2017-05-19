@@ -60,14 +60,15 @@
 			<plugin>
 				<groupId>org.jsweet</groupId>
 				<artifactId>jsweet-maven-plugin</artifactId>
-				<version>1.1.1</version>
+				<version>1.2.0</version>
 				<configuration>
-					<verbose>true</verbose>
+					<verbose>false</verbose>
 					<tsOut>target/ts</tsOut>
-					<outDir>../ui/src/main/resources/static</outDir>
+					<outDir>target/js</outDir>
 					<candiesJsOut>webapp</candiesJsOut>
 					<targetVersion>ES3</targetVersion>
 					<bundle>true</bundle>
+					<bundlesDirectory>target/ts</bundlesDirectory>
 				</configuration>
 				<executions>
 					<execution>
@@ -136,9 +137,25 @@
 
 		<dependency>
 			<groupId>org.jsweet.candies</groupId>
-			<artifactId>bootstrap.datepicker</artifactId>
+			<artifactId>onsenui</artifactId>
 			<version>0.0.0-1.1.0-20160525</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jsweet.candies</groupId>
+			<artifactId>handsontable</artifactId>
+			<version>0.24.3-1.1.0-20160525</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jsweet.candies</groupId>
+			<artifactId>codemirror</artifactId>
+			<version>0.0.0-1.1.0-20160525</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jsweet.candies</groupId>
+			<artifactId>jquery.dynatree</artifactId>
+			<version>1.2.5-1.1.0-20160525</version>
+		</dependency>
+
 	</dependencies>
-	
+
 </project>

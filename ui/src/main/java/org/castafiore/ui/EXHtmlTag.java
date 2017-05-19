@@ -87,6 +87,14 @@ public abstract class EXHtmlTag extends EXComponent implements HTMLTag, Containe
 		}
 		return this;
 	}
+	
+	protected void setBoolean(String attr, boolean b){
+		if(b){
+			setAttribute(attr, "true");
+		}else{
+			setAttribute(attr, (String)null);
+		}
+	}
 
 	public Container setAttribute(String name, String value) {
 

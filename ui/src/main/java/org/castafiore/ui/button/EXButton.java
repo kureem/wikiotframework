@@ -18,6 +18,7 @@
 package org.castafiore.ui.button;
 
 import org.castafiore.ui.EXContainer;
+import org.castafiore.ui.api.Button;
 
 /**
  * 

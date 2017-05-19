@@ -46,11 +46,11 @@ public class EXSlider extends EXContainer implements FormInput<Integer>, Event{
 	public EXSlider(String name) {
 		super(name, "div");
 		setAttribute("value", "0");
-		addEvent(this, Event.MISC);
+		addEvent(this,MISC);
 		
 	}
 
-	
+	public final static String MISC = "misc";
 
 	public String getOrientation() {
 		return orientation;

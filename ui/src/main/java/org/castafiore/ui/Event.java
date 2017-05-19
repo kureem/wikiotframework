@@ -22,7 +22,7 @@ import java.util.Map;
 
 /**
  * The event model in castafiore
- * It is split into 3 parts due to the fact that in a web application codes can be executed on the browser, and on the server as well
+ * It is split Stringo 3 parts due to the fact that in a web application codes can be executed on the browser, and on the server as well
  * 
  * Of course the Success method is executed after a ServerAction
  * 
@@ -40,96 +40,52 @@ public interface Event extends Serializable {
 	/**
 	 * event type on blur
 	 */
-	public final static int BLUR = 1;
+	public final static String BLUR = "blur";
 	
-	public final static int CHANGE = 2;
+	public final static String CHANGE = "change";
 	
-	public final static int CLICK = 3;
+	public final static String CLICK = "click";
 	
-	public final static int DOUBLE_CLICK = 20;
+	public final static String DOUBLE_CLICK = "dblclick";
 	
-	public final static int FOCUSS = 4;
+	public final static String FOCUSS = "focus";
 	
-	public final static int HELP = 5;
+	public final static String HELP = "help";
 	
-	public final static int HOVER = 6;
+	public final static String HOVER = "hover";
 	
-	public final static int KEY_DOWN = 7;
+	public final static String KEY_DOWN = "keydown";
 	
-	public final static int KEY_PRESS = 8;
+	public final static String KEY_PRESS = "keypress";
 	
-	public final static int KEY_UP = 9;
+	public final static String KEY_UP = "keyup";
 	
-	public final static int LOAD = 10;
+	public final static String LOAD = "load";
 	
-	public final static int MOUSE_DOWN = 11;
+	public final static String MOUSE_DOWN = "mousedown";
 	
-	public final static int MOUSE_MOVE = 12;
+	public final static String MOUSE_MOVE = "mousemove";
 	
-	public final static int MOUSE_OUT = 13;
+	public final static String MOUSE_OUT = "mouseout";
 	
-	public final static int MOUSE_OVER = 14;
+	public final static String MOUSE_OVER = "mouseover";
 	
-	public final static int MOUSE_UP = 15;
+	public final static String MOUSE_UP = "mouseup";
 	
-	public final static int RESET = 16;
+	public final static String RESET = "reset";
 	
-	public final static int SELECT = 17;
+	public final static String SELECT = "select";
 	
-	public final static int SUBMIT = 18;
+	public final static String SUBMIT = "submit";
 	
-	public final static int UNLOAD = 19;
+	public final static String UNLOAD = "unload";
 	
-	public final static int READY = 21;
+	public final static String READY = "ready";
 	
-	public final static int SCROLL = 22;
-	
-	
-	
-	public final static int START_RESIZE = 24;
-	
-	public final static int RESIZE = 25;
-	
-	public final static int STOP_RESIZE = 26;
-	
-	public final static int RIGHT_CLICK = 27;
-	
-	public final static int RIGHT_MOUSE_UP = 28;
-	
-	public final static int RIGHT_MOUSE_DOWN = 29;
-	
-	public final static int DRAG = 30;
+	public final static String SCROLL = "scroll";
 	
 	
-	public final static int START_DRAG = 31;
 	
-	public final static int END_DRAG = 32;
-	
-	
-	public final static int DND_ACTIVATE = 33;
-	
-	public final static int DND_DEACTIVATE = 34;
-	
-	public final static int DND_OVER = 35;
-	
-	public final static int DND_OUT = 36;
-	
-	public final static int DND_DROP = 37;
-	
-	
-	public final static int SELECTABLE_SELECTED = 38;
-	
-	public final static int SELECTABLE_SELECTING = 39;
-	
-	public final static int SELECTABLE_START = 40;
-	
-	public final static int SELECTABLE_STOP = 41;
-	
-	public final static int SELECTABLE_UNSELECTED = 42;
-	
-	public final static int SELECTABLE_UNSELECTING = 43;
-	
-	public final static int MISC = 44;
 	
 	
 	

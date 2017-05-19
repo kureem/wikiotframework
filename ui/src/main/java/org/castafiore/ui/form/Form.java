@@ -21,7 +21,7 @@ import java.util.Map;
 
 import org.castafiore.ui.Container;
 import org.castafiore.ui.FormInput;
-import org.castafiore.ui.button.Button;
+import org.castafiore.ui.api.Button;
 
 public interface Form extends Container{
 	

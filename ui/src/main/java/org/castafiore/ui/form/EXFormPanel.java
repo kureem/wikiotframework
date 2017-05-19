@@ -8,7 +8,7 @@ import java.util.Map;
 import org.castafiore.ui.Container;
 import org.castafiore.ui.EXContainer;
 import org.castafiore.ui.FormInput;
-import org.castafiore.ui.button.Button;
+import org.castafiore.ui.api.Button;
 import org.castafiore.ui.panel.EXPanel;
 import org.castafiore.utils.ComponentUtil;
 

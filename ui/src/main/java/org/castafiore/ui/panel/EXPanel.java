@@ -21,8 +21,8 @@ import java.util.List;
 import org.castafiore.ui.Container;
 import org.castafiore.ui.EXContainer;
 import org.castafiore.ui.Event;
+import org.castafiore.ui.api.Panel;
 import org.castafiore.ui.button.Type;
-import org.castafiore.ui.js.JSMap;
 
 public class EXPanel extends EXContainer implements  Panel {
 	private static final long serialVersionUID = 1L;
@@ -129,19 +129,6 @@ public class EXPanel extends EXContainer implements  Panel {
 		return bodyContainer;
 	}
 
-	public Container setDraggable(boolean draggable) {
-		if (draggable) {
-			JSMap options = new JSMap().put("opacity", 0.35).put("handle", "#" + widgetHead.getId());
-			options.put("containment", "document");
-			setDraggable(true, options);
-			setStyle("position", "absolute");
-			setStyle("top", "10%");
-			setStyle("left", "10%");
-		} else {
-			super.setDraggable(false);
-			setStyle("position", "static");
-		}
-		return this;
-	}
+	
 
 }

@@ -19,6 +19,7 @@ import org.castafiore.ui.interceptors.InterceptorRegistry;
 import org.castafiore.utils.ComponentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -64,6 +65,7 @@ public class CastafioreController {
 		}
 	}
 
+	@CrossOrigin(origins = "http://127.0.0.1:8000")
 	@RequestMapping("/castafiore/ui/*")
 	public Object doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
 

@@ -1,48 +1,59 @@
 package org.castafiore.ui;
 
-import java.util.Map;
-
-import org.castafiore.ui.button.EXButton;
-import org.castafiore.ui.form.EXFormPanel;
-import org.castafiore.ui.form.EXInput;
+import org.castafiore.mobile.EXIcon;
+import org.castafiore.mobile.EXPage;
+import org.castafiore.mobile.EXToolbar;
+import org.castafiore.mobile.EXToolbarButton;
 
 @SuppressWarnings("serial")
 @org.springframework.stereotype.Component
 public class Documentation extends EXApplication{
+	
+	
+	private EXPage root = new EXPage("root");
+	
+	private EXToolbar toolbar = new EXToolbar("rtb");
+	
+	
 
 	public Documentation() {
 		super("documentation");
+		addChild(root);
+		root.addChild(toolbar);
 		
-		addChild(new EXButton("btn", "Start").addEvent(new ServerEvent() {
-			
-			@Override
-			public boolean ServerAction(Container container, Map<String, String> request) throws UIException {
-				
-				System.out.println(request);
-				createFormPanel();
-				return true;
-			}
-		}, Event.CLICK));
-	}
-	
-	
-	
-	public void createFormPanel(){
-		EXFormPanel panel = new EXFormPanel("User Profile", "User Profile");
+		Container left =new EXContainer("left", "div").addClass("left");
+		EXToolbarButton tbt = new EXToolbarButton("ltbt");
+		EXIcon icon = new EXIcon("s");
+		icon.setIcon("md-menu");
+		tbt.addChild(icon);
+		left.addChild(tbt);
+		toolbar.addChild(left);
 		
-		panel.addField("First name", new EXInput("firstName"));
-		panel.addField("Last name", new EXInput("lastName"));
-		panel.addField("Address Line 1", new EXInput("addressLine1"));
-		panel.addField("Address Line 2", new EXInput("addressLine2"));
-		panel.addField("City", new EXInput("city"));
-		panel.addField("Postal Code", new EXInput("postalCode"));
-		panel.addField("Telephone", new EXInput("telephone").setMask("0000-0000"));
-		addChild(panel);
-		
-		//ValidationProvider<Configuration<T>>
-		
-	//	Validator v = null;
-		//v.equals(obj)
+		//addChild(new EXPage("root").addChild(new EXButton("button")));
+		/*
+		 *  <div data-role="page" id="list-page">
+        <div data-role="header" data-position="fixed" data-theme="c">
+            <h1>TODO App</h1>
+            <a href="#add-page" data-icon="add" class="ui-btn-right">Add</a>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview" data-inset="true" id="todo-list"></ul>
+        </div>
+    </div>
+
+    <div data-role="page" id="add-page">
+        <div data-role="header" data-position="fixed" data-theme="c">
+            <h1>Add TODO</h1>
+            <a href="#list-page" data-icon="back" class="ui-btn-left">back</a>
+        </div>
+        <div data-role="content">
+            <input id="todo-title" type="text" placeholder="TODO Title">
+            <textarea id="todo-body" style="height: 8em" placeholder="Description"></textarea>
+            <input id="add-button" type="button" value="Save" onclick="addTodo()">
+            <input id="add-button" type="button" value="Picture And Save" onclick="addTodoPicture()"  data-theme="b">
+        </div>
+    </div>
+		 */
 		
 	}
 

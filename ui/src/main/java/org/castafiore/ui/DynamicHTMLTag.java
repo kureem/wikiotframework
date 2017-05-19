@@ -33,13 +33,13 @@ public interface DynamicHTMLTag extends HTMLTag {
 	 * @param event
 	 * @param type
 	 */
-	public Container addEvent(Event event, int type);
+	public Container addEvent(Event event, String type);
 	
 	/**
 	 * returns all  events 
 	 * @return
 	 */
-	public Map<Integer, List<Event>> getEvents();
+	public Map<String, List<Event>> getEvents();
 	
 	
 

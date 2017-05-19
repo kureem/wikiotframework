@@ -34,7 +34,7 @@ public abstract  class EXDynamicHTMLTag extends EXHtmlTag implements DynamicHTML
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Map<Integer, List<Event>> events = new LinkedHashMap<Integer, List<Event>>(0);
+	private Map<String, List<Event>> events = new LinkedHashMap<String, List<Event>>(0);
 
 	public EXDynamicHTMLTag(String name, String tagName) 
 	{
@@ -64,7 +64,7 @@ public abstract  class EXDynamicHTMLTag extends EXHtmlTag implements DynamicHTML
 	 */
 	public abstract String getHTML() ;
 		
-	public Container addEvent(Event event, int type) 
+	public Container addEvent(Event event, String type) 
 	{
 		
 		if (events.containsKey(type)) 
@@ -80,7 +80,7 @@ public abstract  class EXDynamicHTMLTag extends EXHtmlTag implements DynamicHTML
 		return this;
 	}
 
-	public Map<Integer, List<Event>> getEvents() 
+	public Map<String, List<Event>> getEvents() 
 	{
 		return this.events;
 	}

@@ -9,7 +9,7 @@ import org.castafiore.ui.Container;
 import org.castafiore.ui.EXContainer;
 import org.castafiore.ui.FormInput;
 import org.castafiore.ui.JQuery;
-import org.castafiore.ui.button.Button;
+import org.castafiore.ui.api.Button;
 import org.castafiore.utils.ComponentUtil;
 import org.castafiore.utils.ComponentVisitor;
 

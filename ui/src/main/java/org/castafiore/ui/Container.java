@@ -163,13 +163,6 @@ public interface Container extends DynamicHTMLTag {
 	 */
 	public Container getParent();
 
-	public Container setDraggable(boolean draggable);
-
-	public Container setDraggable(boolean draggable, JSMap options);
-
-	public Container setResizable(boolean res);
-
-	public Container setResizable(boolean res, JSMap options);
 
 	/**
 	 * 

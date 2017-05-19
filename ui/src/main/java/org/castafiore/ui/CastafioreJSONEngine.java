@@ -34,7 +34,6 @@ import org.castafiore.ui.js.JSVar;
 import org.castafiore.ui.layout.TemplateComponent;
 import org.castafiore.ui.panel.EXWarning;
 import org.castafiore.utils.ComponentUtil;
-import org.castafiore.utils.EventUtil;
 
 
 /**
@@ -270,12 +269,12 @@ public final class CastafioreJSONEngine {
 		
 		if(component != null)
 		{	
-			 Map<Integer, List<Event>> map =  component.getEvents();
+			 Map<String, List<Event>> map =  component.getEvents();
 			 
-			 Iterator<Integer> types = map.keySet().iterator();
+			 Iterator<String> types = map.keySet().iterator();
 			 while(types.hasNext())
 			 {
-				 Integer eType = types.next();
+				 String eType = types.next();
 				 events = map.get(eType);
 				 if(events != null)
 				 {
@@ -435,11 +434,11 @@ public final class CastafioreJSONEngine {
 	 */
 	public  synchronized List<JEvent> executeClientPartOfEvents(Container container, Container root)
 	{
-		Map<Integer, List<Event>> mapEvents = container.getEvents();
+		Map<String, List<Event>> mapEvents = container.getEvents();
 		
-		Set<Integer> eventTypes = mapEvents.keySet();
+		Set<String> eventTypes = mapEvents.keySet();
 		
-		Iterator<Integer> eventTypesIterator = eventTypes.iterator();
+		Iterator<String> eventTypesIterator = eventTypes.iterator();
 		List<JEvent> result = new LinkedList<JEvent>();
 		while(eventTypesIterator.hasNext())
 		{
@@ -447,12 +446,12 @@ public final class CastafioreJSONEngine {
 			JQuery rootWrapper = new JQuery(root, new ListOrderedMap());
 			
 			JQuery wrapper = rootWrapper.getDescendentById(container.getId());
-			Integer eventType = eventTypesIterator.next();
+			String eventType = eventTypesIterator.next();
 			
-			if(eventType < 30)
-			{
+			//if(eventType < 30)
+		//	{
 			
-				String eventName = EventUtil.getEventName(eventType);
+				String eventName = eventType;
 				
 				List<Event> events = mapEvents.get(eventType);
 				String clientJS = "";
@@ -477,7 +476,7 @@ public final class CastafioreJSONEngine {
 				evt.setEventName(eventName);
 				result.add(evt);
 				//jQuery.on(eventName, clientJS);
-			}
+			//}
 		}
 		return result;
 	}

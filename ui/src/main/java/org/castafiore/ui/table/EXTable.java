@@ -68,6 +68,7 @@ public class EXTable extends EXContainer implements Table, Event
 
 	}
 
+	public static final String MISC = "misc";
 	
 	public EXTable(String name, TableModel model, CellRenderer renderer)
 	{

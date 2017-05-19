@@ -56,15 +56,15 @@ public abstract class EXTemplateComponent extends EXContainer implements Templat
 
 	}
 
-	public String event(int type) {
+	public String event(String type) {
 		return event(type, null);
 	}
 
-	public String event(int type, Map<String, String> params) {
+	public String event(String type, Map<String, String> params) {
 		JSMap map = new JSMap();
 		List<Event> evts = getEvents().get(type);
 		if (evts == null || evts.size() == 0) {
-			throw new UIException("There is no event of type " + EventUtil.getEventName(type)
+			throw new UIException("There is no event of type " + type
 					+ " configured in component " + getName());
 		}
 		map.put("casta_applicationid", getRoot().getName());

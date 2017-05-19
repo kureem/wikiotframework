@@ -127,4 +127,7 @@
 		</extensions>
 	</build>
 
+	<modules>
+		<module>workflow</module>
+	</modules>
 </project>

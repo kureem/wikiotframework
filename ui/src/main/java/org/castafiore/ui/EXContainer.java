@@ -21,9 +21,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.castafiore.ui.dnd.SimpleDraggableEvent;
-import org.castafiore.ui.dnd.SimpleResizableEvent;
-import org.castafiore.ui.js.JSMap;
 import org.castafiore.utils.StringUtil;
 import org.springframework.util.Assert;
 
@@ -302,10 +299,6 @@ public class EXContainer extends EXDynamicHTMLTag implements Container {
 	}
 	
 	
-	public boolean isDraggable()
-	{
-		return hasEvent(SimpleDraggableEvent.class, Event.READY);	
-	}
 	
 	public boolean hasEvent(Class<?> event,int type)
 	{
@@ -344,49 +337,6 @@ public class EXContainer extends EXDynamicHTMLTag implements Container {
 	}
 	
 	
-	public Container setDraggable(boolean draggable)
-	{
-		setDraggable(draggable, null);
-		return this;
-	}
-	
-	public Container setDraggable(boolean draggable, JSMap options)
-	{
-		if(draggable)
-		{
-			if(!hasEvent(SimpleDraggableEvent.class,Event.READY))
-			{
-				this.addEvent(new SimpleDraggableEvent(options), Event.READY);
-			}
-		}
-		else
-		{
-			removeEvent(SimpleDraggableEvent.class, Event.READY);
-		}
-		return this;
-	}
-	
-	public Container setResizable(boolean res){
-		setResizable(res, new JSMap());
-		return this;
-	}
-	
-	public Container setResizable(boolean res, JSMap options)
-	{
-		if(res)
-		{
-			if(!hasEvent(SimpleResizableEvent.class,Event.READY))
-			{
-				this.addEvent(new SimpleResizableEvent(options), Event.READY);
-			}
-		}
-		else
-		{
-			removeEvent(SimpleResizableEvent.class, Event.READY);
-		}
-		return this;
-	}
-
 
 
 

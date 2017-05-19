@@ -195,7 +195,7 @@ public class EXTree extends EXContainer{
 				children.setDisplay(false);
 				addChild(children);
 			}
-			setDraggable(true);
+			//setDraggable(true);
 		}
 		
 		public String Open()

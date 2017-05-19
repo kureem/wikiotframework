@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+	<title>Application builder</title>
+	<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+	<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.css">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,300italic,300,500,400italic,500italic,700,700italic' rel='stylesheet' type='text/css'>
+</head>
+  
+<body>
+	<script type="text/javascript" src="/webjars/jquery/2.2.4/jquery.min.js"></script>	
+	<script src="https://unpkg.com/onsenui/js/onsenui.js"></script>
+	<script src="java/bundle.js"></script>
+	<script src="bundle.js"></script>
+	<script>
+		ons.platform.select('ios');
+	</script>
+
+
+<div id="templates" style="display:none">
+
+<div id="jspanel"class="panel panel-flat">
+	<div class="panel-heading">
+		<h6 class="panel-title">
+			<span name="panelTitle">Traffic sources</span>
+			<a class="heading-elements-toggle">
+				<ul class="icons-list" name="iconList">
+               		<li><a data-action="collapse"></a></li>
+               		<li><a data-action="close"></a></li>
+               	</ul>
+			</a>
+		</h6>
+		<div class="heading-elements">
+		</div>
+	</div>
+	<div class="panel-body" name="panelBody">
+	</div>
+</div>
+
+
+<div class="sidebar-user">
+	<div class="category-content">
+		<div class="media">
+			<a href="#" class="media-left"><img src="assets/images/demo/users/face11.jpg" class="img-circle img-sm" alt=""></a>
+			<div class="media-body">
+				<span class="media-heading text-semibold">Victoria Baker</span>
+				<div class="text-size-mini text-muted">
+					<i class="icon-pin text-size-small"></i> &nbsp;Santa Ana, CA
+				</div>
+			</div>
+
+			<div class="media-right media-middle">
+				<ul class="icons-list">
+					<li>
+						<a href="#"><i class="icon-cog3"></i></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+</body>
+</html>
