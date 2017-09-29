@@ -666,9 +666,15 @@ public class JSContainer implements Renderable, Designable {
 
 	@Override
 	public List<Parameter> getParameters() {
-		
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	/*@Override
+	public List<Parameter> getParameters() {
+		
+	}*/
 	
-	protected Parameter createParameter
+	//protected Parameter createParameter
 
 }
