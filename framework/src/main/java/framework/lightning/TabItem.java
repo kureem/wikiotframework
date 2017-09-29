@@ -1,7 +1,5 @@
 package framework.lightning;
 
-import static jsweet.dom.Globals.alert;
-
 import framework.EventListener;
 import framework.JSContainer;
 import jsweet.dom.Event;

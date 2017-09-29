@@ -15,9 +15,9 @@ public class Icon extends JSContainer {
 	public final static String TEXT_DEFAULT = "slds-icon-text-default";
 
 	public final static String TEXT_WARNING = "slds-icon-text-warning";
-	
+
 	public final static String TEXT_ERROR = "slds-icon-text-error";
-	
+
 	public final static String TEXT_LIGHT = "slds-icon-text-light";
 
 	private String assetsUrl = "/lightning/assets/icons";
@@ -26,19 +26,8 @@ public class Icon extends JSContainer {
 
 	private String iconName = "settings";
 
-	private String textType = "";
-	
-	private String size = "";
-	   
-	//private JSContainer use = new JSContainer("use");
-
-	 
-	 
 	public Icon(String name, String type, String iconName) {
 		super(name, "div");
-		//addChild(use);
-		//setAttribute("aria-hidden", "true");
-		//use.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 		this.type = type;
 		this.iconName = iconName;
 		refresh();
@@ -47,16 +36,11 @@ public class Icon extends JSContainer {
 
 	public Icon(String name) {
 		super(name, "div");
-		//addChild(use);
-		//use.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 		refresh();
 	}
 
 	public void refresh() {
 		String html = "<svg class='slds-button__icon'><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"/webjars/lightning/2.3.2/assets/icons/utility-sprite/svg/symbols.svg#settings\"></use></svg>";
-		//String href = assetsUrl + "/" + type + "-sprite/svg/symbols.svg#" + iconName;
-		//use.setAttribute("xlink:href", href);
-		 
 		setHtml(html);
 	}
 

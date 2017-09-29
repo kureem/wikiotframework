@@ -1,6 +1,5 @@
 package framework.renderer;
 
-import framework.JSContainer;
 import framework.Renderable;
 import jsweet.dom.HTMLElement;
 

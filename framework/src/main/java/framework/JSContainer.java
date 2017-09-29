@@ -510,6 +510,7 @@ public class JSContainer implements Renderable, Designable {
 		render(null);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void render(HTMLElement parent) {
 		if (renderers.isEmpty()) {

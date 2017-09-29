@@ -74,6 +74,7 @@ public class PropertiesEditor extends FormLayout implements EventListener, Edito
 		
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void performAction(JSContainer source, Event evt) {
 			
