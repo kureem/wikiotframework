@@ -319,7 +319,7 @@ declare namespace framework {
      * @param {string} tag
      * @class
      */
-    class JSContainer implements framework.Renderable {
+    class JSContainer implements framework.Renderable, framework.configs.Designable {
         /**
          *
          */
@@ -340,6 +340,7 @@ declare namespace framework {
         changedAttributes: java.util.List<string>;
         changedStyles: java.util.List<string>;
         commands: java.util.List<JSContainer.JSCommand>;
+        component: framework.builder.model.Component;
         constructor(name?: any, tag?: any);
         /**
          *
@@ -550,6 +551,22 @@ declare namespace framework {
          * @return {framework.JSContainer}
          */
         getRoot(): JSContainer;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        setParameter(key: string, value: string): void;
+        /**
+         *
+         * @return {framework.builder.model.Component}
+         */
+        getComponent(): framework.builder.model.Component;
+        /**
+         *
+         * @return {*}
+         */
+        getParameters(): java.util.List<framework.configs.Parameter>;
     }
     namespace JSContainer {
         class JSCommand {
@@ -747,7 +764,7 @@ declare namespace framework.lightning {
         static STATE_BRAND: string;
         static STATE_DESTRUCTIVE: string;
         static STATE_SUCCESS: string;
-        component: framework.builder.model.Component;
+        __framework_lightning_Button_component: framework.builder.model.Component;
         constructor(name?: any);
         addIcon(icon: framework.lightning.Icon): Button;
         setLabel(label: string): Button;
@@ -1203,7 +1220,7 @@ declare namespace framework.builder {
 }
 declare namespace framework.builder {
     class PropertiesEditor extends framework.lightning.FormLayout implements framework.EventListener, framework.builder.Editor {
-        component: framework.configs.Designable;
+        __framework_builder_PropertiesEditor_component: framework.configs.Designable;
         constructor(name: string);
         setComponent(designable: framework.configs.Designable): void;
         addProperty$java_lang_String$framework_JSInput(label: string, input: framework.JSInput): PropertiesEditor;

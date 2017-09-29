@@ -18,6 +18,11 @@
 			<groupId>org.wikiot</groupId>
 			<artifactId>common</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.limitless</groupId>
+			<artifactId>framework</artifactId>
+			<version>1.0.4-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<distributionManagement>

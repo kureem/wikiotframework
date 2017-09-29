@@ -1,5 +1,7 @@
 package framework.builder;
 
+import framework.builder.libraries.BasicComponentLibrary;
+import framework.builder.libraries.LightningComponentLibrary;
 import framework.lightning.BorderLayout;
 import framework.lightning.Button;
 import framework.lightning.ButtonGroup;

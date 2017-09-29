@@ -1,4 +1,4 @@
-package framework.builder;
+package framework.builder.libraries;
 
 import framework.JSContainer;
 import framework.builder.model.AbstractComponentFactory;

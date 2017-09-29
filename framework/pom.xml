@@ -52,6 +52,10 @@
 	</pluginRepositories>
 	<dependencies>
 
+
+		<!-- https://mvnrepository.com/artifact/org.webjars/jquery-ui -->
+		
+
 		<dependency>
 			<groupId>org.jsweet.candies</groupId>
 			<artifactId>jsweet-core</artifactId>

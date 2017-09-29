@@ -1,6 +1,8 @@
-package framework.builder;
+package framework.builder.libraries;
 
 import framework.JSContainer;
+import framework.builder.Component;
+import framework.builder.ComponentsLibrary;
 import framework.builder.model.AbstractComponentFactory;
 import framework.lightning.Button;
 
