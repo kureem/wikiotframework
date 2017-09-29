@@ -1,11 +1,10 @@
-package framework.ext;
+package framework.interactions;
 
 
 import static def.jquery.Globals.$;
 
 import def.jqueryui.JQuery;
 import def.jqueryui.jqueryui.DraggableOptions;
-import framework.Draggable;
 import framework.renderer.Renderer;
 import jsweet.dom.HTMLElement;
 

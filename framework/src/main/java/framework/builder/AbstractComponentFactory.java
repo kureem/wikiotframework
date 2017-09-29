@@ -1,7 +1,9 @@
-package framework.builder.model;
+package framework.builder;
 
 import framework.JSContainer;
-import framework.builder.BuilderEventListener;
+import framework.builder.model.BuilderEvent;
+import framework.builder.model.Component;
+import framework.builder.model.ComponentFactory;
 import framework.configs.Designable;
 import jsweet.lang.Object;
 

@@ -1,9 +1,8 @@
 package framework.lightning;
 
 import def.jqueryui.jqueryui.DraggableOptions;
-import framework.Draggable;
 import framework.JSContainer;
-import framework.ext.DraggableRenderer;
+import framework.interactions.Draggable;
 
 public class DockedComposer extends Grid implements Draggable{
 
@@ -50,7 +49,6 @@ public class DockedComposer extends Grid implements Draggable{
 		addChild(body);
 		addChild(footer);
 		addClass("slds-docked-composer");
-		addRenderer(new DraggableRenderer());
 		
 	}
 	

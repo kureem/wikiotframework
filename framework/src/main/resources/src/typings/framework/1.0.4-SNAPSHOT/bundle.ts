@@ -1,5 +1,75 @@
 /* Generated from Java with JSweet 2.0.0-SNAPSHOT - http://www.jsweet.org */
 namespace framework.builder {
+    export abstract class AbstractComponentFactory implements framework.builder.model.ComponentFactory {
+        /*private*/ impl : string;
+
+        public constructor(impl : string) {
+            this.impl = null;
+            this.impl = impl;
+        }
+
+        /**
+         * 
+         * @param {string} impl
+         * @return {boolean}
+         */
+        public supports(impl : string) : boolean {
+            return /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(impl,this.impl));
+        }
+
+        public abstract createInstance() : framework.JSContainer;
+
+        configureStyles(instance : framework.JSContainer, component : framework.builder.model.Component) {
+            let keys : string[] = Object.keys(component.styles);
+            for(let index440=0; index440 < keys.length; index440++) {
+                let key = keys[index440];
+                {
+                    let value : string = <string>component.styles[key];
+                    instance.setStyle(key, value);
+                }
+            }
+        }
+
+        configureParameters(instance : framework.configs.Designable, component : framework.builder.model.Component) {
+            let keys : string[] = Object.keys(component.parameters);
+            for(let index441=0; index441 < keys.length; index441++) {
+                let key = keys[index441];
+                {
+                    let value : string = <string>component.parameters[key];
+                    instance.setParameter(key, value);
+                }
+            }
+        }
+
+        configureEvents(instance : framework.JSContainer, component : framework.builder.model.Component) {
+            for(let index442=0; index442 < component.events.length; index442++) {
+                let event = component.events[index442];
+                {
+                    let listener : framework.builder.BuilderEventListener = new framework.builder.BuilderEventListener(event.source);
+                    instance.addEventListener(listener, event.type);
+                }
+            }
+        }
+
+        /**
+         * 
+         * @param {framework.builder.model.Component} component
+         * @return {framework.JSContainer}
+         */
+        public build(component : framework.builder.model.Component) : framework.JSContainer {
+            let instance : framework.JSContainer = this.createInstance();
+            this.configureStyles(instance, component);
+            this.configureParameters(<framework.configs.Designable><any>instance, component);
+            this.configureEvents(instance, component);
+            return instance;
+        }
+    }
+    AbstractComponentFactory["__class"] = "framework.builder.AbstractComponentFactory";
+    AbstractComponentFactory["__interfaces"] = ["framework.builder.model.ComponentFactory"];
+
+
+}
+namespace framework.builder {
     export class BuilderEventListener implements framework.EventListener {
         /*private*/ jsSource : string;
 
@@ -28,76 +98,6 @@ namespace framework.builder {
     export interface Editor extends framework.Renderable {
         setComponent(designable : framework.configs.Designable);
     }
-}
-namespace framework.builder.model {
-    export abstract class AbstractComponentFactory implements framework.builder.model.ComponentFactory {
-        /*private*/ impl : string;
-
-        public constructor(impl : string) {
-            this.impl = null;
-            this.impl = impl;
-        }
-
-        /**
-         * 
-         * @param {string} impl
-         * @return {boolean}
-         */
-        public supports(impl : string) : boolean {
-            return /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(impl,this.impl));
-        }
-
-        public abstract createInstance() : framework.JSContainer;
-
-        configureStyles(instance : framework.JSContainer, component : framework.builder.model.Component) {
-            let keys : string[] = Object.keys(component.styles);
-            for(let index121=0; index121 < keys.length; index121++) {
-                let key = keys[index121];
-                {
-                    let value : string = <string>component.styles[key];
-                    instance.setStyle(key, value);
-                }
-            }
-        }
-
-        configureParameters(instance : framework.configs.Designable, component : framework.builder.model.Component) {
-            let keys : string[] = Object.keys(component.parameters);
-            for(let index122=0; index122 < keys.length; index122++) {
-                let key = keys[index122];
-                {
-                    let value : string = <string>component.parameters[key];
-                    instance.setParameter(key, value);
-                }
-            }
-        }
-
-        configureEvents(instance : framework.JSContainer, component : framework.builder.model.Component) {
-            for(let index123=0; index123 < component.events.length; index123++) {
-                let event = component.events[index123];
-                {
-                    let listener : framework.builder.BuilderEventListener = new framework.builder.BuilderEventListener(event.source);
-                    instance.addEventListener(listener, event.type);
-                }
-            }
-        }
-
-        /**
-         * 
-         * @param {framework.builder.model.Component} component
-         * @return {framework.JSContainer}
-         */
-        public build(component : framework.builder.model.Component) : framework.JSContainer {
-            let instance : framework.JSContainer = this.createInstance();
-            this.configureStyles(instance, component);
-            this.configureParameters(<framework.configs.Designable><any>instance, component);
-            this.configureEvents(instance, component);
-            return instance;
-        }
-    }
-    AbstractComponentFactory["__class"] = "framework.builder.model.AbstractComponentFactory";
-    AbstractComponentFactory["__interfaces"] = ["framework.builder.model.ComponentFactory"];
-
-
 }
 namespace framework.builder.model {
     export class BuilderEvent {
@@ -138,35 +138,6 @@ namespace framework.builder.model {
 
         build(component : framework.builder.model.Component) : framework.JSContainer;
     }
-}
-namespace framework.builder.model {
-    export class ComponentFactoryRegistry {
-        static INSTANCE : ComponentFactoryRegistry; public static INSTANCE_$LI$() : ComponentFactoryRegistry { if(ComponentFactoryRegistry.INSTANCE == null) ComponentFactoryRegistry.INSTANCE = new ComponentFactoryRegistry(); return ComponentFactoryRegistry.INSTANCE; };
-
-        /*private*/ factories : java.util.List<framework.builder.model.ComponentFactory> = <any>(new java.util.LinkedList<any>());
-
-        public registerFactory(factory : framework.builder.model.ComponentFactory) {
-            this.factories.add(factory);
-        }
-
-        public getFactory(impl : string) : framework.builder.model.ComponentFactory {
-            for(let index124=this.factories.iterator();index124.hasNext();) {
-                let factory = index124.next();
-                {
-                    if(factory.supports(impl)) {
-                        return factory;
-                    }
-                }
-            }
-            return null;
-        }
-
-        public static getInstance() : ComponentFactoryRegistry {
-            return ComponentFactoryRegistry.INSTANCE_$LI$();
-        }
-    }
-    ComponentFactoryRegistry["__class"] = "framework.builder.model.ComponentFactoryRegistry";
-
 }
 namespace framework.configs {
     export interface Designable extends framework.Renderable {
@@ -246,74 +217,130 @@ namespace framework.configs {
     Parameter["__class"] = "framework.configs.Parameter";
 
 }
-namespace framework {
-    export interface Draggable extends framework.Renderable {
-        getDraggableOptions() : JQueryUI.DraggableOptions;
+namespace framework.core {
+    export class BasicDecoratorRegistry implements framework.core.DecoratorsRegistry, framework.core.Initializable {
+        /*private*/ decorators : java.util.List<framework.core.Decorator> = <any>(new java.util.ArrayList<any>());
+
+        /**
+         * 
+         * @param {*} decorator
+         */
+        public registerDecorator(decorator : framework.core.Decorator) {
+            this.decorators.add(decorator);
+        }
+
+        /**
+         * 
+         * @return {*}
+         */
+        public getDecorators() : java.util.List<framework.core.Decorator> {
+            return this.decorators;
+        }
+
+        /**
+         * 
+         */
+        public doInit() {
+            this.registerDecorator(new framework.interactions.InteractionsDecorator());
+        }
+
+        constructor() {
+        }
+    }
+    BasicDecoratorRegistry["__class"] = "framework.core.BasicDecoratorRegistry";
+    BasicDecoratorRegistry["__interfaces"] = ["framework.core.Initializable","framework.core.DecoratorsRegistry"];
+
+
+}
+namespace framework.core {
+    export class BeanFactory {
+        static INSTANCE : BeanFactory; public static INSTANCE_$LI$() : BeanFactory { if(BeanFactory.INSTANCE == null) BeanFactory.INSTANCE = new BeanFactory(); return BeanFactory.INSTANCE; };
+
+        /*private*/ beans : java.util.Map<string, any> = <any>(new java.util.HashMap<any, any>());
+
+        public static getInstance() : BeanFactory {
+            return BeanFactory.INSTANCE_$LI$();
+        }
+
+        onInit(obj : any) {
+            if(obj != null && (obj["__interfaces"] != null && obj["__interfaces"].indexOf("framework.core.Initializable") >= 0 || obj.constructor != null && obj.constructor["__interfaces"] != null && obj.constructor["__interfaces"].indexOf("framework.core.Initializable") >= 0)) {
+                (<framework.core.Initializable><any>obj).doInit();
+            }
+        }
+
+        initBeanFactoryAware(bean : any) {
+            if(bean != null && (bean["__interfaces"] != null && bean["__interfaces"].indexOf("framework.core.BeanFactoryAware") >= 0 || bean.constructor != null && bean.constructor["__interfaces"] != null && bean.constructor["__interfaces"].indexOf("framework.core.BeanFactoryAware") >= 0)) {
+                this.initBeanFactoryAware(<framework.core.BeanFactoryAware><any>bean);
+            }
+        }
+
+        public addBean(mixing : any, instance : any) {
+            let mixxingName : string = mixing.toString();
+            this.onInit(instance);
+            this.initBeanFactoryAware(instance);
+            this.beans.put(mixxingName, instance);
+        }
+
+        public getBeanOfType<T>(clazz : any) : T {
+            for(let index443=this.beans.keySet().iterator();index443.hasNext();) {
+                let key = index443.next();
+                {
+                    let bean : any = this.beans.get(key);
+                    try {
+                        if((<any>bean.constructor).isAssignableFrom(clazz)) {
+                            return <T>bean;
+                        }
+                    } catch(e) {
+                    };
+                }
+            }
+            let mixing : string = clazz.toString();
+            if(this.beans.containsKey(mixing)) {
+                return <T>this.beans.get(mixing);
+            }
+            throw new java.lang.RuntimeException("No bean of type " + /* getName */(c => c["__class"]?c["__class"]:c["name"])(clazz) + " found in factory");
+        }
+
+        public getBean(name : string) : any {
+            return this.beans.get(name);
+        }
+    }
+    BeanFactory["__class"] = "framework.core.BeanFactory";
+
+}
+namespace framework.core {
+    export interface BeanFactoryAware {
+        setBeanFactory(beanfactory : framework.core.BeanFactory);
     }
 }
-namespace framework {
-    export interface Droppable extends framework.Renderable {
-        getDroppableOptions() : JQueryUI.DroppableOptions;
+namespace framework.core {
+    export interface Decorator {
+        decorate(renderable : framework.Renderable);
     }
+}
+namespace framework.core {
+    export interface DecoratorsRegistry {
+        registerDecorator(decorator : framework.core.Decorator);
+
+        getDecorators() : java.util.List<framework.core.Decorator>;
+    }
+}
+namespace framework.core {
+    export interface Initializable {
+        doInit();
+    }
+}
+namespace framework.core {
+    export class Static {
+        public static idCount : number = 0;
+    }
+    Static["__class"] = "framework.core.Static";
+
 }
 namespace framework {
     export interface EventListener {
         performAction(source : framework.JSContainer, evt : Event);
     }
-}
-namespace framework.ext {
-    export class DraggableRenderer implements framework.renderer.Renderer<framework.Draggable> {
-        public doRender$framework_Draggable$jsweet_dom_HTMLElement(c : framework.Draggable, root : HTMLElement) {
-            let jq : JQuery = <JQuery>$("#" + c.getId());
-            let opts : JQueryUI.DraggableOptions = c.getDraggableOptions();
-            if(opts == null) jq.draggable(); else jq.draggable(opts);
-        }
-
-        /**
-         * 
-         * @param {*} c
-         * @param {HTMLElement} root
-         */
-        public doRender(c? : any, root? : any) : any {
-            if(((c != null && (c["__interfaces"] != null && c["__interfaces"].indexOf("framework.Draggable") >= 0 || c.constructor != null && c.constructor["__interfaces"] != null && c.constructor["__interfaces"].indexOf("framework.Draggable") >= 0)) || c === null) && ((root != null && root instanceof <any>HTMLElement) || root === null)) {
-                return <any>this.doRender$framework_Draggable$jsweet_dom_HTMLElement(c, root);
-            } else throw new Error('invalid overload');
-        }
-
-        constructor() {
-        }
-    }
-    DraggableRenderer["__class"] = "framework.ext.DraggableRenderer";
-    DraggableRenderer["__interfaces"] = ["framework.renderer.Renderer"];
-
-
-}
-namespace framework.ext {
-    export class DroppableRenderer implements framework.renderer.Renderer<framework.Droppable> {
-        public doRender$framework_Droppable$jsweet_dom_HTMLElement(c : framework.Droppable, root : HTMLElement) {
-            let jq : JQuery = <JQuery>$("#" + c.getId());
-            let opts : JQueryUI.DroppableOptions = c.getDroppableOptions();
-            if(opts == null) jq.droppable(); else jq.droppable(opts);
-        }
-
-        /**
-         * 
-         * @param {*} c
-         * @param {HTMLElement} root
-         */
-        public doRender(c? : any, root? : any) : any {
-            if(((c != null && (c["__interfaces"] != null && c["__interfaces"].indexOf("framework.Droppable") >= 0 || c.constructor != null && c.constructor["__interfaces"] != null && c.constructor["__interfaces"].indexOf("framework.Droppable") >= 0)) || c === null) && ((root != null && root instanceof <any>HTMLElement) || root === null)) {
-                return <any>this.doRender$framework_Droppable$jsweet_dom_HTMLElement(c, root);
-            } else throw new Error('invalid overload');
-        }
-
-        constructor() {
-        }
-    }
-    DroppableRenderer["__class"] = "framework.ext.DroppableRenderer";
-    DroppableRenderer["__interfaces"] = ["framework.renderer.Renderer"];
-
-
 }
 namespace framework {
     export interface InputField<T> extends framework.Renderable {
@@ -365,9 +392,74 @@ namespace framework {
     InputTypes["__class"] = "framework.InputTypes";
 
 }
+namespace framework.interactions {
+    export interface Draggable extends framework.Renderable {
+        getDraggableOptions() : JQueryUI.DraggableOptions;
+    }
+}
+namespace framework.interactions {
+    export class DraggableRenderer implements framework.renderer.Renderer<framework.interactions.Draggable> {
+        public doRender$framework_interactions_Draggable$jsweet_dom_HTMLElement(c : framework.interactions.Draggable, root : HTMLElement) {
+            let jq : JQuery = <JQuery>$("#" + c.getId());
+            let opts : JQueryUI.DraggableOptions = c.getDraggableOptions();
+            if(opts == null) jq.draggable(); else jq.draggable(opts);
+        }
+
+        /**
+         * 
+         * @param {*} c
+         * @param {HTMLElement} root
+         */
+        public doRender(c? : any, root? : any) : any {
+            if(((c != null && (c["__interfaces"] != null && c["__interfaces"].indexOf("framework.interactions.Draggable") >= 0 || c.constructor != null && c.constructor["__interfaces"] != null && c.constructor["__interfaces"].indexOf("framework.interactions.Draggable") >= 0)) || c === null) && ((root != null && root instanceof <any>HTMLElement) || root === null)) {
+                return <any>this.doRender$framework_interactions_Draggable$jsweet_dom_HTMLElement(c, root);
+            } else throw new Error('invalid overload');
+        }
+
+        constructor() {
+        }
+    }
+    DraggableRenderer["__class"] = "framework.interactions.DraggableRenderer";
+    DraggableRenderer["__interfaces"] = ["framework.renderer.Renderer"];
+
+
+}
+namespace framework.interactions {
+    export interface Droppable extends framework.Renderable {
+        getDroppableOptions() : JQueryUI.DroppableOptions;
+    }
+}
+namespace framework.interactions {
+    export class DroppableRenderer implements framework.renderer.Renderer<framework.interactions.Droppable> {
+        public doRender$framework_interactions_Droppable$jsweet_dom_HTMLElement(c : framework.interactions.Droppable, root : HTMLElement) {
+            let jq : JQuery = <JQuery>$("#" + c.getId());
+            let opts : JQueryUI.DroppableOptions = c.getDroppableOptions();
+            if(opts == null) jq.droppable(); else jq.droppable(opts);
+        }
+
+        /**
+         * 
+         * @param {*} c
+         * @param {HTMLElement} root
+         */
+        public doRender(c? : any, root? : any) : any {
+            if(((c != null && (c["__interfaces"] != null && c["__interfaces"].indexOf("framework.interactions.Droppable") >= 0 || c.constructor != null && c.constructor["__interfaces"] != null && c.constructor["__interfaces"].indexOf("framework.interactions.Droppable") >= 0)) || c === null) && ((root != null && root instanceof <any>HTMLElement) || root === null)) {
+                return <any>this.doRender$framework_interactions_Droppable$jsweet_dom_HTMLElement(c, root);
+            } else throw new Error('invalid overload');
+        }
+
+        constructor() {
+        }
+    }
+    DroppableRenderer["__class"] = "framework.interactions.DroppableRenderer";
+    DroppableRenderer["__interfaces"] = ["framework.renderer.Renderer"];
+
+
+}
 namespace framework {
     export class Main {
         public static main(args : string[]) {
+            framework.core.BeanFactory.getInstance().addBean("framework.core.DecoratorsRegistry", new framework.core.BasicDecoratorRegistry());
             new framework.builder.Builder("builder").render();
         }
     }
@@ -459,6 +551,15 @@ namespace framework {
 }
 namespace framework.renderer {
     export class ContainerRenderer implements framework.renderer.Renderer<framework.JSContainer> {
+        public decorate(c : framework.JSContainer) {
+            for(let index444=framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.core.DecoratorsRegistry").getDecorators().iterator();index444.hasNext();) {
+                let dec = index444.next();
+                {
+                    dec.decorate(c);
+                }
+            }
+        }
+
         public doRender$framework_JSContainer$jsweet_dom_HTMLElement(c : framework.JSContainer, root : HTMLElement) {
             let jq : HTMLElement = document.getElementById(c.getId());
             let tag : string = c.getTag();
@@ -467,6 +568,7 @@ namespace framework.renderer {
             let html : string = c.getHtml();
             let parent : framework.Renderable = c.getParent();
             if(!rendered) {
+                this.decorate(c);
                 if(jq != null) jq.remove();
                 let njq : HTMLElement = document.createElement(tag);
                 if(name != null && name.length > 0) njq.setAttribute("name", name);
@@ -515,8 +617,8 @@ namespace framework.renderer {
         }
 
         execCommands(njq : HTMLElement, container : framework.Renderable) {
-            for(let index125=container.getCommands().iterator();index125.hasNext();) {
-                let command = index125.next();
+            for(let index445=container.getCommands().iterator();index445.hasNext();) {
+                let command = index445.next();
                 {
                     let name : string = command.getName();
                     let params : Object = command.getParameters();
@@ -536,14 +638,14 @@ namespace framework.renderer {
         }
 
         renderEvents(njq : HTMLElement, c : framework.JSContainer) {
-            for(let index126=c.getListeners().keySet().iterator();index126.hasNext();) {
-                let key = index126.next();
+            for(let index446=c.getListeners().keySet().iterator();index446.hasNext();) {
+                let key = index446.next();
                 {
                     let listeners : java.util.List<framework.EventListener> = c.getListeners().get(key);
                     njq.addEventListener(key, ((listeners) => {
                         return (evt) => {
-                            for(let index127=listeners.iterator();index127.hasNext();) {
-                                let l = index127.next();
+                            for(let index447=listeners.iterator();index447.hasNext();) {
+                                let l = index447.next();
                                 {
                                     this.synchronizeFields(njq, c);
                                     l.performAction(c, evt);
@@ -592,8 +694,8 @@ namespace framework.renderer {
                     inputField.setRawValue(value);
                 }
             }
-            for(let index128=jsfield.getChildren().iterator();index128.hasNext();) {
-                let c = index128.next();
+            for(let index448=jsfield.getChildren().iterator();index448.hasNext();) {
+                let c = index448.next();
                 {
                     this.synchronizeFields(document.getElementById(c.getId()), c);
                 }
@@ -603,9 +705,9 @@ namespace framework.renderer {
         renderAttributes(njq : HTMLElement, c : framework.Renderable, changed : boolean) {
             if(changed) {
                 {
-                    let array130 = c.getChangedAttributes();
-                    for(let index129=0; index129 < array130.length; index129++) {
-                        let key = array130[index129];
+                    let array450 = c.getChangedAttributes();
+                    for(let index449=0; index449 < array450.length; index449++) {
+                        let key = array450[index449];
                         {
                             if(c.getAttribute(key) == null) {
                                 njq.removeAttribute(key);
@@ -616,8 +718,8 @@ namespace framework.renderer {
                     }
                 }
             } else {
-                for(let index131=c.getAttributeNames().iterator();index131.hasNext();) {
-                    let key = index131.next();
+                for(let index451=c.getAttributeNames().iterator();index451.hasNext();) {
+                    let key = index451.next();
                     {
                         if(c.getAttribute(key) != null) njq.setAttribute(key, c.getAttribute(key));
                     }
@@ -639,17 +741,17 @@ namespace framework.renderer {
         renderStyles(njq : HTMLElement, c : framework.Renderable, changed : boolean) {
             if(changed) {
                 {
-                    let array133 = c.getChangedStyles();
-                    for(let index132=0; index132 < array133.length; index132++) {
-                        let key = array133[index132];
+                    let array453 = c.getChangedStyles();
+                    for(let index452=0; index452 < array453.length; index452++) {
+                        let key = array453[index452];
                         {
                             njq.style.setProperty(key, c.getStyle(key));
                         }
                     }
                 }
             } else {
-                for(let index134=c.getStyleNames().iterator();index134.hasNext();) {
-                    let key = index134.next();
+                for(let index454=c.getStyleNames().iterator();index454.hasNext();) {
+                    let key = index454.next();
                     {
                         njq.style.setProperty(key, c.getStyle(key));
                     }
@@ -674,13 +776,6 @@ namespace framework.renderer {
          */
         doRender(c? : any, root? : any) : any;
     }
-}
-namespace framework {
-    export class Static {
-        public static idCount : number = 0;
-    }
-    Static["__class"] = "framework.Static";
-
 }
 namespace framework.util {
     /**
@@ -796,8 +891,8 @@ namespace framework.util {
     IOUtil["__class"] = "framework.util.IOUtil";
 
 }
-namespace framework.builder {
-    export class BasicComponentFactory extends framework.builder.model.AbstractComponentFactory {
+namespace framework.builder.libraries {
+    export class BasicComponentFactory extends framework.builder.AbstractComponentFactory {
         /*private*/ tag : string;
 
         public constructor(tag : string) {
@@ -815,8 +910,39 @@ namespace framework.builder {
             return container;
         }
     }
-    BasicComponentFactory["__class"] = "framework.builder.BasicComponentFactory";
+    BasicComponentFactory["__class"] = "framework.builder.libraries.BasicComponentFactory";
     BasicComponentFactory["__interfaces"] = ["framework.builder.model.ComponentFactory"];
+
+
+}
+namespace framework.interactions {
+    export class InteractionsDecorator implements framework.core.Decorator {
+        static draggableRenderer : framework.interactions.DraggableRenderer; public static draggableRenderer_$LI$() : framework.interactions.DraggableRenderer { if(InteractionsDecorator.draggableRenderer == null) InteractionsDecorator.draggableRenderer = new framework.interactions.DraggableRenderer(); return InteractionsDecorator.draggableRenderer; };
+
+        static droppableRenderer : framework.interactions.DroppableRenderer; public static droppableRenderer_$LI$() : framework.interactions.DroppableRenderer { if(InteractionsDecorator.droppableRenderer == null) InteractionsDecorator.droppableRenderer = new framework.interactions.DroppableRenderer(); return InteractionsDecorator.droppableRenderer; };
+
+        /**
+         * 
+         * @param {*} renderable
+         */
+        public decorate(renderable : framework.Renderable) {
+            if(renderable != null && (renderable["__interfaces"] != null && renderable["__interfaces"].indexOf("framework.interactions.Draggable") >= 0 || renderable.constructor != null && renderable.constructor["__interfaces"] != null && renderable.constructor["__interfaces"].indexOf("framework.interactions.Draggable") >= 0)) {
+                if(!renderable.getRenderers().contains(InteractionsDecorator.draggableRenderer_$LI$())) {
+                    renderable.addRenderer(InteractionsDecorator.draggableRenderer_$LI$());
+                }
+            }
+            if(renderable != null && (renderable["__interfaces"] != null && renderable["__interfaces"].indexOf("framework.interactions.Droppable") >= 0 || renderable.constructor != null && renderable.constructor["__interfaces"] != null && renderable.constructor["__interfaces"].indexOf("framework.interactions.Droppable") >= 0)) {
+                if(!renderable.getRenderers().contains(InteractionsDecorator.droppableRenderer_$LI$())) {
+                    renderable.addRenderer(InteractionsDecorator.droppableRenderer_$LI$());
+                }
+            }
+        }
+
+        constructor() {
+        }
+    }
+    InteractionsDecorator["__class"] = "framework.interactions.InteractionsDecorator";
+    InteractionsDecorator["__interfaces"] = ["framework.core.Decorator"];
 
 
 }
@@ -980,8 +1106,8 @@ namespace framework {
          * @return {string}
          */
         public uid() : string {
-            framework.Static.idCount++;
-            return framework.Static.idCount + "";
+            framework.core.Static.idCount++;
+            return framework.core.Static.idCount + "";
         }
 
         /**
@@ -996,8 +1122,8 @@ namespace framework {
             }
             let aStyles : string[] = styles.split(" ");
             let add : boolean = true;
-            for(let index135=0; index135 < aStyles.length; index135++) {
-                let style = aStyles[index135];
+            for(let index455=0; index455 < aStyles.length; index455++) {
+                let style = aStyles[index455];
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(style.trim(),styleClass))) {
                         add = false;
@@ -1255,8 +1381,8 @@ namespace framework {
         public setRendered(b : boolean) : JSContainer {
             this.rendered = b;
             if(!b) {
-                for(let index136=this.children.iterator();index136.hasNext();) {
-                    let child = index136.next();
+                for(let index456=this.children.iterator();index456.hasNext();) {
+                    let child = index456.next();
                     {
                         child.setRendered(b);
                     }
@@ -1284,12 +1410,12 @@ namespace framework {
             if(!this.renderers.contains(JSContainer.DEFAULT_RENDERER_$LI$())) {
                 this.renderers.add(0, JSContainer.DEFAULT_RENDERER_$LI$());
             }
-            for(let index137=this.renderers.iterator();index137.hasNext();) {
-                let renderer = index137.next();
+            for(let index457=this.renderers.iterator();index457.hasNext();) {
+                let renderer = index457.next();
                 renderer.doRender(this, parent)
             }
-            for(let index138=this.getChildren().iterator();index138.hasNext();) {
-                let child = index138.next();
+            for(let index458=this.getChildren().iterator();index458.hasNext();) {
+                let child = index458.next();
                 {
                     child.render();
                 }
@@ -1330,9 +1456,9 @@ namespace framework {
                 return null;
             }
             {
-                let array140 = this.parent.getAttribute("class").split(" ");
-                for(let index139=0; index139 < array140.length; index139++) {
-                    let s = array140[index139];
+                let array460 = this.parent.getAttribute("class").split(" ");
+                for(let index459=0; index459 < array460.length; index459++) {
+                    let s = array460[index459];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(s.trim(),cls))) return <T>this.parent;
                     }
@@ -1453,7 +1579,7 @@ namespace framework {
 
 }
 namespace framework.builder {
-    export class Component extends framework.JSContainer implements framework.Draggable {
+    export class Component extends framework.JSContainer implements framework.interactions.Draggable {
         /*private*/ titleFigure : framework.JSContainer = new framework.JSContainer("div").addClass("slds-app-launcher__tile-figure");
 
         /*private*/ avatar : framework.JSContainer = new framework.JSContainer("span").addClass("slds-avatar slds-avatar_large");
@@ -1472,7 +1598,6 @@ namespace framework.builder {
             this.initial.setHtml(initial);
             this.titleFigure.addChild$framework_JSContainer(this.title);
             this.title.setHtml(label);
-            this.addRenderer(new framework.ext.DraggableRenderer());
         }
 
         /**
@@ -1491,7 +1616,7 @@ namespace framework.builder {
         }
     }
     Component["__class"] = "framework.builder.Component";
-    Component["__interfaces"] = ["framework.Draggable","framework.configs.Designable","framework.Renderable"];
+    Component["__interfaces"] = ["framework.interactions.Draggable","framework.configs.Designable","framework.Renderable"];
 
 
 }
@@ -1673,8 +1798,8 @@ namespace framework {
          */
         public getValue() : string {
             let val : string = this.getAttribute("value");
-            for(let index141=this.getChildren().iterator();index141.hasNext();) {
-                let opt = index141.next();
+            for(let index461=this.getChildren().iterator();index461.hasNext();) {
+                let opt = index461.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(opt.getAttribute("value"),val))) {
                         return (<framework.JSOption>opt).getValue();
@@ -1685,8 +1810,8 @@ namespace framework {
         }
 
         public setValue$java_lang_String(val : string) {
-            for(let index142=this.getChildren().iterator();index142.hasNext();) {
-                let opt = index142.next();
+            for(let index462=this.getChildren().iterator();index462.hasNext();) {
+                let opt = index462.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(opt.getAttribute("value"),val))) {
                         (<framework.JSOption>opt).setSelected(true);
@@ -1990,8 +2115,8 @@ namespace framework.lightning {
         }
 
         public setState(state : string) : Button {
-            for(let index143=0; index143 < Button.states_$LI$().length; index143++) {
-                let s = Button.states_$LI$()[index143];
+            for(let index463=0; index463 < Button.states_$LI$().length; index463++) {
+                let s = Button.states_$LI$()[index463];
                 {
                     this.removeClass("slds-button_" + s);
                 }
@@ -2456,10 +2581,6 @@ namespace framework.lightning {
 
         /*private*/ iconName : string;
 
-        /*private*/ textType : string;
-
-        /*private*/ size : string;
-
         public constructor(name? : any, type? : any, iconName? : any) {
             if(((typeof name === 'string') || name === null) && ((typeof type === 'string') || type === null) && ((typeof iconName === 'string') || iconName === null)) {
                 let __args = Array.prototype.slice.call(arguments);
@@ -2467,8 +2588,6 @@ namespace framework.lightning {
                 this.assetsUrl = "/lightning/assets/icons";
                 this.type = "utility";
                 this.iconName = "settings";
-                this.textType = "";
-                this.size = "";
                 (() => {
                     this.type = type;
                     this.iconName = iconName;
@@ -2480,8 +2599,6 @@ namespace framework.lightning {
                 this.assetsUrl = "/lightning/assets/icons";
                 this.type = "utility";
                 this.iconName = "settings";
-                this.textType = "";
-                this.size = "";
                 (() => {
                     this.refresh();
                 })();
@@ -2871,8 +2988,8 @@ namespace framework.lightning {
         }
 
         public setActive(item : framework.lightning.TabItem) : Tabs {
-            for(let index144=this.nav.getChildren().iterator();index144.hasNext();) {
-                let c = index144.next();
+            for(let index464=this.nav.getChildren().iterator();index464.hasNext();) {
+                let c = index464.next();
                 {
                     let tab : framework.lightning.TabItem = <framework.lightning.TabItem>c;
                     tab.setActive(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(tab,item)));
@@ -2911,55 +3028,14 @@ namespace framework.lightning {
 
 
 }
-namespace framework {
-    export class TestApp extends framework.JSContainer {
-        public constructor() {
-            super("root", "div");
-            this.setStyle("width", "200px");
-            this.setStyle("height", "400px");
-            this.setStyle("border", "solid 1px silver");
-            let child : framework.JSContainer = new framework.JSContainer("div");
-            child.setStyle("width", "100px").setStyle("height", "100px").setStyle("background-color", "steelblue");
-            this.addChild$framework_JSContainer(child);
-            child.addEventListener(new TestApp.TestApp$0(this), "click");
-        }
-    }
-    TestApp["__class"] = "framework.TestApp";
-    TestApp["__interfaces"] = ["framework.configs.Designable","framework.Renderable"];
-
-
-
-    export namespace TestApp {
-
-        export class TestApp$0 implements framework.EventListener {
-            public __parent: any;
-            /**
-             * 
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            public performAction(source : framework.JSContainer, evt : Event) {
-                alert("Hello world !!");
-            }
-
-            constructor(__parent: any) {
-                this.__parent = __parent;
-            }
-        }
-        TestApp$0["__interfaces"] = ["framework.EventListener"];
-
-
-    }
-
-}
 namespace framework.builder {
     export class BasicComponent extends framework.builder.Component {
         public constructor(name : string, initial : string, label : string) {
-            super("html:" + name, initial, label, new framework.builder.BasicComponentFactory(name));
+            super("html:" + name, initial, label, new framework.builder.libraries.BasicComponentFactory(name));
         }
     }
     BasicComponent["__class"] = "framework.builder.BasicComponent";
-    BasicComponent["__interfaces"] = ["framework.Draggable","framework.configs.Designable","framework.Renderable"];
+    BasicComponent["__interfaces"] = ["framework.interactions.Draggable","framework.configs.Designable","framework.Renderable"];
 
 
 }
@@ -2986,8 +3062,8 @@ namespace framework.builder {
         }
 
         public addComponents(...components : framework.builder.Component[]) : ComponentsLibrary {
-            for(let index145=0; index145 < components.length; index145++) {
-                let com = components[index145];
+            for(let index465=0; index465 < components.length; index465++) {
+                let com = components[index465];
                 {
                     let li : framework.JSContainer = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-3");
                     this.addChild$framework_JSContainer(li);
@@ -3079,7 +3155,7 @@ namespace framework.lightning {
 
 }
 namespace framework.lightning {
-    export class DockedComposer extends framework.lightning.Grid implements framework.Draggable {
+    export class DockedComposer extends framework.lightning.Grid implements framework.interactions.Draggable {
         /*private*/ header : framework.lightning.Grid = <framework.lightning.Grid>new framework.lightning.Grid("header", "div").addClass("slds-docked-composer__header slds-shrink-none").setAttribute("aria-live", "assertive");
 
         /*private*/ headerTitle : framework.lightning.Media = new framework.lightning.Media("headerTitle");
@@ -3119,7 +3195,6 @@ namespace framework.lightning {
             this.addChild$framework_JSContainer(this.body);
             this.addChild$framework_JSContainer(this.footer);
             this.addClass("slds-docked-composer");
-            this.addRenderer(new framework.ext.DraggableRenderer());
         }
 
         public setOpen(b : boolean) : DockedComposer {
@@ -3203,7 +3278,7 @@ namespace framework.lightning {
         }
     }
     DockedComposer["__class"] = "framework.lightning.DockedComposer";
-    DockedComposer["__interfaces"] = ["framework.Draggable","framework.configs.Designable","framework.Renderable"];
+    DockedComposer["__interfaces"] = ["framework.interactions.Draggable","framework.configs.Designable","framework.Renderable"];
 
 
 }
@@ -3310,9 +3385,9 @@ namespace framework.builder {
 
         /*private*/ libraryDockedComposer : framework.lightning.DockedComposer = new framework.lightning.DockedComposer("library");
 
-        /*private*/ basicComponentLib : framework.builder.BasicComponentLibrary = new framework.builder.BasicComponentLibrary();
+        /*private*/ basicComponentLib : framework.builder.libraries.BasicComponentLibrary = new framework.builder.libraries.BasicComponentLibrary();
 
-        /*private*/ lightningComponentLib : framework.builder.LightningComponentLibrary = new framework.builder.LightningComponentLibrary();
+        /*private*/ lightningComponentLib : framework.builder.libraries.LightningComponentLibrary = new framework.builder.libraries.LightningComponentLibrary();
 
         /*private*/ componentsTabs : framework.builder.ComponentsTabs = new framework.builder.ComponentsTabs("componentsTabs");
 
@@ -3384,8 +3459,8 @@ namespace framework.lightning {
         public setLayout(layout : string) : DescriptionList {
             this.currentLayout = layout;
             this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
-            for(let index146=this.getChildren().iterator();index146.hasNext();) {
-                let child = index146.next();
+            for(let index466=this.getChildren().iterator();index466.hasNext();) {
+                let child = index466.next();
                 {
                     child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                     child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -3548,33 +3623,33 @@ namespace framework.builder {
 
 
 }
-namespace framework.builder {
+namespace framework.builder.libraries {
     export class BasicComponentLibrary extends framework.builder.ComponentsLibrary {
         public constructor() {
             super("Basic");
             this.addComponents(new framework.builder.BasicComponent("h1", "H1", "Heading 1"), new framework.builder.BasicComponent("h2", "H2", "Heading 2"), new framework.builder.BasicComponent("h3", "H3", "Heading 3"), new framework.builder.BasicComponent("h4", "H4", "Heading 4"), new framework.builder.BasicComponent("h5", "H5", "Heading 5"), new framework.builder.BasicComponent("span", "SPAN", "Span"), new framework.builder.BasicComponent("p", "P", "Paragraph"), new framework.builder.BasicComponent("label", "LABEL", "Label"), new framework.builder.BasicComponent("a", "A", "Hyper Link"), new framework.builder.BasicComponent("img", "IMG", "Image"), new framework.builder.BasicComponent("ol", "OL", "Ordered List"), new framework.builder.BasicComponent("ul", "UL", "Un-Ordered List"), new framework.builder.BasicComponent("li", "LI", "List Item"), new framework.builder.BasicComponent("form", "FORM", "Form"), new framework.builder.BasicComponent("fieldset", "UL", "Fieldset"), new framework.builder.BasicComponent("input", "input", "Input"), new framework.builder.BasicComponent("select", "SELECT", "Select"), new framework.builder.BasicComponent("textarea", "TEXTAREA", "Text Area"), new framework.builder.BasicComponent("button", "BUTTON", "Button"));
         }
     }
-    BasicComponentLibrary["__class"] = "framework.builder.BasicComponentLibrary";
+    BasicComponentLibrary["__class"] = "framework.builder.libraries.BasicComponentLibrary";
     BasicComponentLibrary["__interfaces"] = ["framework.configs.Designable","framework.Renderable"];
 
 
 }
-namespace framework.builder {
+namespace framework.builder.libraries {
     export class LightningComponentLibrary extends framework.builder.ComponentsLibrary {
         public constructor() {
             super("Lightning");
             this.addComponents(new framework.builder.Component("lgt:btn", "BTN", "Button", new LightningComponentLibrary.LightningComponentLibrary$0(this, "lgt:btn")));
         }
     }
-    LightningComponentLibrary["__class"] = "framework.builder.LightningComponentLibrary";
+    LightningComponentLibrary["__class"] = "framework.builder.libraries.LightningComponentLibrary";
     LightningComponentLibrary["__interfaces"] = ["framework.configs.Designable","framework.Renderable"];
 
 
 
     export namespace LightningComponentLibrary {
 
-        export class LightningComponentLibrary$0 extends framework.builder.model.AbstractComponentFactory {
+        export class LightningComponentLibrary$0 extends framework.builder.AbstractComponentFactory {
             public __parent: any;
             /**
              * 
@@ -3640,8 +3715,8 @@ namespace framework.builder {
                 element.setInput(cb);
             } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(parameter.type, "select")) {
                 let select : framework.JSSelect = new framework.JSSelect(parameter.name);
-                for(let index147=parameter.options.iterator();index147.hasNext();) {
-                    let opt = index147.next();
+                for(let index467=parameter.options.iterator();index467.hasNext();) {
+                    let opt = index467.next();
                     {
                         let o : framework.JSOption = new framework.JSOption(opt.text, opt.value);
                         select.addOption(o);
@@ -3685,8 +3760,8 @@ namespace framework.builder {
         public setComponent(designable : framework.configs.Designable) {
             super.setComponent(designable);
             this.clear();
-            for(let index148=this.__framework_builder_PropertiesEditor_component.getParameters().iterator();index148.hasNext();) {
-                let p = index148.next();
+            for(let index468=this.__framework_builder_PropertiesEditor_component.getParameters().iterator();index468.hasNext();) {
+                let p = index468.next();
                 {
                     this.addProperty$framework_configs_Parameter(p);
                 }
@@ -3740,6 +3815,10 @@ framework.lightning.Button.states_$LI$();
 
 framework.JSContainer.DEFAULT_RENDERER_$LI$();
 
-framework.builder.model.ComponentFactoryRegistry.INSTANCE_$LI$();
+framework.interactions.InteractionsDecorator.droppableRenderer_$LI$();
+
+framework.interactions.InteractionsDecorator.draggableRenderer_$LI$();
+
+framework.core.BeanFactory.INSTANCE_$LI$();
 
 framework.Main.main(null);

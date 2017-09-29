@@ -1,4 +1,4 @@
-package framework;
+package framework.core;
 
 public class Static {
 

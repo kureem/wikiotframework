@@ -10,6 +10,7 @@ import java.util.Set;
 import framework.builder.model.Component;
 import framework.configs.Designable;
 import framework.configs.Parameter;
+import framework.core.Static;
 import framework.renderer.ContainerRenderer;
 import framework.renderer.Renderer;
 import jsweet.dom.HTMLElement;

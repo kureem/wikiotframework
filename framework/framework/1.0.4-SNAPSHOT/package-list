@@ -1,8 +1,10 @@
 framework
 framework.builder
+framework.builder.libraries
 framework.builder.model
 framework.configs
-framework.ext
+framework.core
+framework.interactions
 framework.lightning
 framework.renderer
 framework.util

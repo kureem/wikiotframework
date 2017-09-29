@@ -1,10 +1,9 @@
 package framework.builder;
 
 import def.jqueryui.jqueryui.DraggableOptions;
-import framework.Draggable;
 import framework.JSContainer;
 import framework.builder.model.ComponentFactory;
-import framework.ext.DraggableRenderer;
+import framework.interactions.Draggable;
 
 public class Component extends JSContainer implements Draggable{
 
@@ -27,7 +26,7 @@ public class Component extends JSContainer implements Draggable{
 		this.initial.setHtml(initial);
 		titleFigure.addChild(title);
 		title.setHtml(label);
-		addRenderer(new DraggableRenderer());
+		//addRenderer(new DraggableRenderer());
 	}
 
 	@Override

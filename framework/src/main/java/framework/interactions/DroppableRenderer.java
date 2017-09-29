@@ -1,9 +1,8 @@
-package framework.ext;
+package framework.interactions;
 
 import static def.jquery.Globals.$;
 
 import def.jqueryui.JQuery;
-import framework.Droppable;
 import framework.renderer.Renderer;
 import jsweet.dom.HTMLElement;
 

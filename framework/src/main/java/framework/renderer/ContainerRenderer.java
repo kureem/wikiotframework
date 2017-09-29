@@ -11,6 +11,9 @@ import framework.JSContainer;
 import framework.JSContainer.JSCommand;
 import framework.JSInput;
 import framework.Renderable;
+import framework.core.BeanFactory;
+import framework.core.Decorator;
+import framework.core.DecoratorsRegistry;
 import jsweet.dom.HTMLElement;
 import jsweet.dom.HTMLInputElement;
 import jsweet.dom.HTMLSelectElement;
@@ -20,6 +23,13 @@ import jsweet.dom.Node;
 
 public class ContainerRenderer implements Renderer<JSContainer> {
 
+	public void decorate(JSContainer c){
+		  for(Decorator dec :BeanFactory.getInstance().getBeanOfType(DecoratorsRegistry.class).getDecorators()){
+			  dec.decorate(c);
+		  }
+	}
+	
+	
 	public void doRender(JSContainer c, HTMLElement root) {
 		HTMLElement jq = document.getElementById(c.getId());
 		// HTMLElement jq = $("#" + c.getId());
@@ -29,11 +39,10 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 		String html = c.getHtml();
 		Renderable parent = c.getParent();
 		if (!rendered) {
+			decorate(c);
 			if (jq != null)
 				jq.remove();
-			// String shtml = "<" + tag + "></" + tag + ">";
 			HTMLElement njq = document.createElement(tag);
-			// HTMLElement njq = $(shtml);
 			if (name != null && name.length() > 0)
 				njq.setAttribute("name", name);
 			njq.setAttribute("id", c.getId());
@@ -48,15 +57,9 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 				} else {
 					root.appendChild(njq);
 				}
-				// njq.appendTo($("body"));
 			} else {
 				int index = parent.getChildren().indexOf(c);
-				// Renderable prevSib = null;
 				Renderable nextSib = null;
-				/*
-				 * if(index > 0){ prevSib = parent.getChildren().get(index-1);
-				 * if(!prevSib.isRendered()){ prevSib = null; } }
-				 */
 				if (index < parent.getChildren().size() - 1) {
 					nextSib = parent.getChildren().get(index + 1);
 					if (!nextSib.isRendered()) {
@@ -67,11 +70,8 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 				if (nextSib != null) {
 					Node p = document.getElementById(parent.getId());
 					p.insertBefore(njq, document.getElementById(nextSib.getId()));
-
-					// njq.insertBefore();
 				} else {
 					document.getElementById(parent.getId()).appendChild(njq);
-					// njq.append();
 				}
 			}
 			renderEvents(njq, c);

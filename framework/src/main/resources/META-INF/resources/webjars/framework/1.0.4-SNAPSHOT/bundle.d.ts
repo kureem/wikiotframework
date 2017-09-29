@@ -1,21 +1,4 @@
 declare namespace framework.builder {
-    class BuilderEventListener implements framework.EventListener {
-        jsSource: string;
-        constructor(jsSource: string);
-        /**
-         *
-         * @param {framework.JSContainer} source
-         * @param {Event} evt
-         */
-        performAction(source: framework.JSContainer, evt: Event): void;
-    }
-}
-declare namespace framework.builder {
-    interface Editor extends framework.Renderable {
-        setComponent(designable: framework.configs.Designable): any;
-    }
-}
-declare namespace framework.builder.model {
     abstract class AbstractComponentFactory implements framework.builder.model.ComponentFactory {
         impl: string;
         constructor(impl: string);
@@ -35,6 +18,23 @@ declare namespace framework.builder.model {
          * @return {framework.JSContainer}
          */
         build(component: framework.builder.model.Component): framework.JSContainer;
+    }
+}
+declare namespace framework.builder {
+    class BuilderEventListener implements framework.EventListener {
+        jsSource: string;
+        constructor(jsSource: string);
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
+    }
+}
+declare namespace framework.builder {
+    interface Editor extends framework.Renderable {
+        setComponent(designable: framework.configs.Designable): any;
     }
 }
 declare namespace framework.builder.model {
@@ -60,16 +60,6 @@ declare namespace framework.builder.model {
         build(component: framework.builder.model.Component): framework.JSContainer;
     }
 }
-declare namespace framework.builder.model {
-    class ComponentFactoryRegistry {
-        static INSTANCE: ComponentFactoryRegistry;
-        static INSTANCE_$LI$(): ComponentFactoryRegistry;
-        factories: java.util.List<framework.builder.model.ComponentFactory>;
-        registerFactory(factory: framework.builder.model.ComponentFactory): void;
-        getFactory(impl: string): framework.builder.model.ComponentFactory;
-        static getInstance(): ComponentFactoryRegistry;
-    }
-}
 declare namespace framework.configs {
     interface Designable extends framework.Renderable {
         setParameter(key: string, value: string): any;
@@ -93,43 +83,68 @@ declare namespace framework.configs {
         options: java.util.List<framework.configs.Option>;
     }
 }
-declare namespace framework {
-    interface Draggable extends framework.Renderable {
-        getDraggableOptions(): JQueryUI.DraggableOptions;
+declare namespace framework.core {
+    class BasicDecoratorRegistry implements framework.core.DecoratorsRegistry, framework.core.Initializable {
+        decorators: java.util.List<framework.core.Decorator>;
+        /**
+         *
+         * @param {*} decorator
+         */
+        registerDecorator(decorator: framework.core.Decorator): void;
+        /**
+         *
+         * @return {*}
+         */
+        getDecorators(): java.util.List<framework.core.Decorator>;
+        /**
+         *
+         */
+        doInit(): void;
+        constructor();
     }
 }
-declare namespace framework {
-    interface Droppable extends framework.Renderable {
-        getDroppableOptions(): JQueryUI.DroppableOptions;
+declare namespace framework.core {
+    class BeanFactory {
+        static INSTANCE: BeanFactory;
+        static INSTANCE_$LI$(): BeanFactory;
+        beans: java.util.Map<string, any>;
+        static getInstance(): BeanFactory;
+        onInit(obj: any): void;
+        initBeanFactoryAware(bean: any): void;
+        addBean(mixing: any, instance: any): void;
+        getBeanOfType<T>(clazz: any): T;
+        getBean(name: string): any;
+    }
+}
+declare namespace framework.core {
+    interface BeanFactoryAware {
+        setBeanFactory(beanfactory: framework.core.BeanFactory): any;
+    }
+}
+declare namespace framework.core {
+    interface Decorator {
+        decorate(renderable: framework.Renderable): any;
+    }
+}
+declare namespace framework.core {
+    interface DecoratorsRegistry {
+        registerDecorator(decorator: framework.core.Decorator): any;
+        getDecorators(): java.util.List<framework.core.Decorator>;
+    }
+}
+declare namespace framework.core {
+    interface Initializable {
+        doInit(): any;
+    }
+}
+declare namespace framework.core {
+    class Static {
+        static idCount: number;
     }
 }
 declare namespace framework {
     interface EventListener {
         performAction(source: framework.JSContainer, evt: Event): any;
-    }
-}
-declare namespace framework.ext {
-    class DraggableRenderer implements framework.renderer.Renderer<framework.Draggable> {
-        doRender$framework_Draggable$jsweet_dom_HTMLElement(c: framework.Draggable, root: HTMLElement): void;
-        /**
-         *
-         * @param {*} c
-         * @param {HTMLElement} root
-         */
-        doRender(c?: any, root?: any): any;
-        constructor();
-    }
-}
-declare namespace framework.ext {
-    class DroppableRenderer implements framework.renderer.Renderer<framework.Droppable> {
-        doRender$framework_Droppable$jsweet_dom_HTMLElement(c: framework.Droppable, root: HTMLElement): void;
-        /**
-         *
-         * @param {*} c
-         * @param {HTMLElement} root
-         */
-        doRender(c?: any, root?: any): any;
-        constructor();
     }
 }
 declare namespace framework {
@@ -161,6 +176,40 @@ declare namespace framework {
         static color: string;
         static checkbox: string;
         static radio: string;
+    }
+}
+declare namespace framework.interactions {
+    interface Draggable extends framework.Renderable {
+        getDraggableOptions(): JQueryUI.DraggableOptions;
+    }
+}
+declare namespace framework.interactions {
+    class DraggableRenderer implements framework.renderer.Renderer<framework.interactions.Draggable> {
+        doRender$framework_interactions_Draggable$jsweet_dom_HTMLElement(c: framework.interactions.Draggable, root: HTMLElement): void;
+        /**
+         *
+         * @param {*} c
+         * @param {HTMLElement} root
+         */
+        doRender(c?: any, root?: any): any;
+        constructor();
+    }
+}
+declare namespace framework.interactions {
+    interface Droppable extends framework.Renderable {
+        getDroppableOptions(): JQueryUI.DroppableOptions;
+    }
+}
+declare namespace framework.interactions {
+    class DroppableRenderer implements framework.renderer.Renderer<framework.interactions.Droppable> {
+        doRender$framework_interactions_Droppable$jsweet_dom_HTMLElement(c: framework.interactions.Droppable, root: HTMLElement): void;
+        /**
+         *
+         * @param {*} c
+         * @param {HTMLElement} root
+         */
+        doRender(c?: any, root?: any): any;
+        constructor();
     }
 }
 declare namespace framework {
@@ -217,6 +266,7 @@ declare namespace framework {
 }
 declare namespace framework.renderer {
     class ContainerRenderer implements framework.renderer.Renderer<framework.JSContainer> {
+        decorate(c: framework.JSContainer): void;
         doRender$framework_JSContainer$jsweet_dom_HTMLElement(c: framework.JSContainer, root: HTMLElement): void;
         doRender(c?: any, root?: any): any;
         execCommands(njq: HTMLElement, container: framework.Renderable): void;
@@ -237,11 +287,6 @@ declare namespace framework.renderer {
          * @param {HTMLElement} root
          */
         doRender(c?: any, root?: any): any;
-    }
-}
-declare namespace framework {
-    class Static {
-        static idCount: number;
     }
 }
 declare namespace framework.util {
@@ -300,8 +345,8 @@ declare namespace framework.util {
         static writeToFile(content: string, f: java.io.File): boolean;
     }
 }
-declare namespace framework.builder {
-    class BasicComponentFactory extends framework.builder.model.AbstractComponentFactory {
+declare namespace framework.builder.libraries {
+    class BasicComponentFactory extends framework.builder.AbstractComponentFactory {
         tag: string;
         constructor(tag: string);
         /**
@@ -309,6 +354,20 @@ declare namespace framework.builder {
          * @return {framework.JSContainer}
          */
         createInstance(): framework.JSContainer;
+    }
+}
+declare namespace framework.interactions {
+    class InteractionsDecorator implements framework.core.Decorator {
+        static draggableRenderer: framework.interactions.DraggableRenderer;
+        static draggableRenderer_$LI$(): framework.interactions.DraggableRenderer;
+        static droppableRenderer: framework.interactions.DroppableRenderer;
+        static droppableRenderer_$LI$(): framework.interactions.DroppableRenderer;
+        /**
+         *
+         * @param {*} renderable
+         */
+        decorate(renderable: framework.Renderable): void;
+        constructor();
     }
 }
 declare namespace framework {
@@ -584,7 +643,7 @@ declare namespace framework {
     }
 }
 declare namespace framework.builder {
-    class Component extends framework.JSContainer implements framework.Draggable {
+    class Component extends framework.JSContainer implements framework.interactions.Draggable {
         titleFigure: framework.JSContainer;
         avatar: framework.JSContainer;
         initial: framework.JSContainer;
@@ -912,8 +971,6 @@ declare namespace framework.lightning {
         assetsUrl: string;
         type: string;
         iconName: string;
-        textType: string;
-        size: string;
         constructor(name?: any, type?: any, iconName?: any);
         refresh(): void;
         getAssetsUrl(): string;
@@ -1028,23 +1085,6 @@ declare namespace framework.lightning {
         setTruncate(b: boolean): Text;
     }
 }
-declare namespace framework {
-    class TestApp extends framework.JSContainer {
-        constructor();
-    }
-    namespace TestApp {
-        class TestApp$0 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
-    }
-}
 declare namespace framework.builder {
     class BasicComponent extends framework.builder.Component {
         constructor(name: string, initial: string, label: string);
@@ -1079,7 +1119,7 @@ declare namespace framework.lightning {
     }
 }
 declare namespace framework.lightning {
-    class DockedComposer extends framework.lightning.Grid implements framework.Draggable {
+    class DockedComposer extends framework.lightning.Grid implements framework.interactions.Draggable {
         header: framework.lightning.Grid;
         headerTitle: framework.lightning.Media;
         headerIconContainer: framework.JSContainer;
@@ -1151,8 +1191,8 @@ declare namespace framework.builder {
         advancedPropertiesEditorBody: framework.builder.Editor;
         eventEditor: framework.builder.Editor;
         libraryDockedComposer: framework.lightning.DockedComposer;
-        basicComponentLib: framework.builder.BasicComponentLibrary;
-        lightningComponentLib: framework.builder.LightningComponentLibrary;
+        basicComponentLib: framework.builder.libraries.BasicComponentLibrary;
+        lightningComponentLib: framework.builder.libraries.LightningComponentLibrary;
         componentsTabs: framework.builder.ComponentsTabs;
         constructor(name: string);
         dockLeftPanel(b: boolean): void;
@@ -1197,17 +1237,17 @@ declare namespace framework.builder {
         addItem(label?: any, editor?: any): any;
     }
 }
-declare namespace framework.builder {
+declare namespace framework.builder.libraries {
     class BasicComponentLibrary extends framework.builder.ComponentsLibrary {
         constructor();
     }
 }
-declare namespace framework.builder {
+declare namespace framework.builder.libraries {
     class LightningComponentLibrary extends framework.builder.ComponentsLibrary {
         constructor();
     }
     namespace LightningComponentLibrary {
-        class LightningComponentLibrary$0 extends framework.builder.model.AbstractComponentFactory {
+        class LightningComponentLibrary$0 extends framework.builder.AbstractComponentFactory {
             __parent: any;
             /**
              *

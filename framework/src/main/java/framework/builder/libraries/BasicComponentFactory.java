@@ -1,7 +1,7 @@
 package framework.builder.libraries;
 
 import framework.JSContainer;
-import framework.builder.model.AbstractComponentFactory;
+import framework.builder.AbstractComponentFactory;
 
 public class BasicComponentFactory extends AbstractComponentFactory{
 
