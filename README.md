@@ -9,7 +9,6 @@ Generally, a smart system will consists of
 2. An application that will allow the devices to interact in a smart way
 
 
-
 ## How to install the platform
 
 Clone this project with git and install the library in your local Maven repository (so that you can refer to it as a dependency in other Maven projects):
